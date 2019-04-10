@@ -3,8 +3,13 @@ class User < ActiveRecord::Base
   has_many :tweets
 
   validates :email, uniqueness: true
+  validates :username, uniqueness: true
 
   def slug
-    #google this
+    self.username.downcase.gsub(/[^0-9a-z\- ]/, "").gsub(" ", "-")
+  end
+
+  def self.find_by_slug(name)
+    user = User.find {|user| user.slug == name}
   end
 end
