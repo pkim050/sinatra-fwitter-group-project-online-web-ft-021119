@@ -52,6 +52,13 @@ class TweetsController < ApplicationController
     redirect "/tweets/#{params[:id]}/edit"
   end
 
+  patch '/tweets/:id' do
+    redirect "tweets/#{params[:id]}/edit" if params[:tweet][:content].empty?
+    @tweet = Tweet.find(params[:id])
+    @tweet.update(params[:tweet])
+    redirect "/tweets/#{@tweet.id}"
+  end
+
   delete '/tweets/:id' do
     if session[:user_id] != nil
       @tweet = Tweet.find(params[:id])
