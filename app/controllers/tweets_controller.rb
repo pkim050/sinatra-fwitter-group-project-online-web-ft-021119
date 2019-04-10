@@ -35,7 +35,7 @@ class TweetsController < ApplicationController
 
   get '/tweets/:id' do
     if session[:user_id] != nil
-      @tweet = Tweet.find(params[:user_id])
+      @tweet = Tweet.find(params[:id])
       binding.pry
       erb :'/tweets/show'
     else
@@ -44,7 +44,7 @@ class TweetsController < ApplicationController
   end
 
   post '/tweets/:id' do
-
+    redirect "/tweets/#{params[:id]}/edit"
   end
 
   post '/tweets/:id/delete' do
