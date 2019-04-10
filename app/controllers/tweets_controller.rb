@@ -47,8 +47,13 @@ class TweetsController < ApplicationController
     redirect "/tweets/#{params[:id]}/edit"
   end
 
-  post '/tweets/:id/delete' do
-
+  delete '/tweets/:id' do
+    if session[:user_id] != nil
+      @tweet = Tweet.find(params[:id])
+      @tweet.destroy if @tweet.user.id == session[:user_id]
+    else
+      redirect '/login'
+    end
   end
 
 end
